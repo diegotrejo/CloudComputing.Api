@@ -1,4 +1,4 @@
-﻿@model CloudComputing.Models.Pais
+﻿@model CloudComputing.Models.Autor
 
 @{
     ViewData["Title"] = "Create";
@@ -6,13 +6,8 @@
 
 <h1>Create</h1>
 
-<h4>Pais</h4>
+<h4>Autor</h4>
 <hr />
-
-<p style="color:red">
-    @ViewBag.Error
-</p>
-
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -24,14 +19,19 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Capital" class="control-label"></label>
-                <input asp-for="Capital" class="form-control" />
-                <span asp-validation-for="Capital" class="text-danger"></span>
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Region" class="control-label"></label>
-                <input asp-for="Region" class="form-control" />
-                <span asp-validation-for="Region" class="text-danger"></span>
+                <label asp-for="Biography" class="control-label"></label>
+                <input asp-for="Biography" class="form-control" />
+                <span asp-validation-for="Biography" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaisId" class="control-label"></label>
+                <input asp-for="PaisId" class="form-control" />
+                <span asp-validation-for="PaisId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

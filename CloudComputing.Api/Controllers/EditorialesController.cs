@@ -24,7 +24,11 @@ namespace CloudComputing.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Editorial>>> GetEditorial()
         {
-            return await _context.Editoriales.ToListAsync();
+            var data = _context.Editoriales
+                .Include(e => e.Pais)
+                .ToList();
+
+            return data;
         }
 
         // GET: api/Editoriales/5

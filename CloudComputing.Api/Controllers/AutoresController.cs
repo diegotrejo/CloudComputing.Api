@@ -24,7 +24,11 @@ namespace CloudComputing.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Autor>>> GetAutor()
         {
-            return await _context.Autores.ToListAsync();
+            var data = _context.Autores
+                .Include(a => a.Pais)
+                .ToList();
+
+            return data;
         }
 
         // GET: api/Autores/5

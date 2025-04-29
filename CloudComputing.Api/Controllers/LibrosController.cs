@@ -24,7 +24,12 @@ namespace CloudComputing.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Libro>>> GetLibro()
         {
-            return await _context.Libros.ToListAsync();
+            var data = _context.Libros
+                .Include(l => l.Autor)
+                .Include(l => l.Editorial)
+                .ToList();
+
+            return data;
         }
 
         // GET: api/Libros/5
