@@ -2,6 +2,7 @@
 using CloudComputing.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CloudComputing.WEB.MVC.Controllers
 {
@@ -11,6 +12,8 @@ namespace CloudComputing.WEB.MVC.Controllers
         public ActionResult Index()
         {
             var data = Crud<Libro>.GetAll().Result;
+            var fechaAntigua = data.Min(i => i.PublicationDate);
+            ViewBag.LibroAntiguo = data.Where(i => i.PublicationDate == fechaAntigua).ToList()[0];
             return View(data);
         }
 
@@ -24,6 +27,8 @@ namespace CloudComputing.WEB.MVC.Controllers
         // GET: LibrosController/Create
         public ActionResult Create()
         {
+            ViewBag.ListaEditoriales = ListaEditoriales();
+            ViewBag.ListaAutores = ListaAutores();
             return View();
         }
 
@@ -47,9 +52,32 @@ namespace CloudComputing.WEB.MVC.Controllers
         // GET: LibrosController/Edit/5
         public ActionResult Edit(int id)
         {
+            ViewBag.ListaEditoriales = ListaEditoriales();
+            ViewBag.ListaAutores = ListaAutores();
             var data = Crud<Libro>.Get(id).Result;
             return View(data);
         }
+
+        private List<SelectListItem> ListaEditoriales()
+        { 
+            var editoriales = Crud<Editorial>.GetAll().Result;
+            var lista = editoriales.Select( e => new SelectListItem { 
+                 Value = e.Id.ToString(),
+                 Text = e.Name
+            }).ToList();
+
+            return lista;
+        }
+
+        private List<SelectListItem> ListaAutores() { 
+            var autores = Crud<Autor>.GetAll().Result;
+            var lista = autores.Select( a => new SelectListItem { 
+                 Value = a.Id.ToString(),
+                 Text = $"{a.LastName} {a.Name}"
+            }).ToList();
+            return lista;
+        }
+
 
         // POST: LibrosController/Edit/5
         [HttpPost]
